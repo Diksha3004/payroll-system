@@ -65,6 +65,11 @@ body {
   content: '';
   position: absolute;
   width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(59,130,246,0.22) 0%, transparent 70%);
+  bottom: -180px; left: -120px;
+  border-radius: 50%;
+  pointer-events: none;
+}
 @keyframes slideUpFade {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -131,16 +136,6 @@ body {
   align-items: center;
   gap: 12px;
   text-decoration: none;
-}
-.sidebar-brand-icon {
-  width: 38px; height: 38px;
-  background: linear-gradient(135deg, var(--primary), #3b82f6);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; color: white;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(37,99,235,0.4);
-}
 }
 .sidebar-brand-icon {
   width: 38px; height: 38px;
@@ -1112,3 +1107,133 @@ body {
   background: none;
 }
 .nav-tabs { border-bottom: 1px solid var(--border-color); }
+
+
+/* ══════════════════════════════════════════════════
+   INTERACTIVE UI ENHANCEMENTS
+   Keeps the existing PaySync Pro blue/navy design.
+══════════════════════════════════════════════════ */
+:root {
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, .18);
+  --shadow-float: 0 12px 30px rgba(15, 23, 42, .12);
+}
+
+/* Login panel and entrance motion */
+#loginScreen > * { position: relative; z-index: 1; }
+.login-card {
+  width: min(100% - 32px, 440px);
+  padding: 38px 36px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 20px;
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 24px 70px rgba(2, 6, 23, .24);
+  animation: slideUpFade .55s ease both;
+}
+.login-logo { transition: transform .25s ease, box-shadow .25s ease; }
+.login-card:hover .login-logo { transform: translateY(-2px) rotate(-3deg); box-shadow: 0 12px 28px rgba(37,99,235,.32); }
+.demo-credentials { line-height: 1.7; }
+.demo-credentials code { color: var(--primary-dark); font-weight: 700; }
+
+/* Interactive surfaces */
+a, button, .btn, .sidebar-nav-item, .report-btn-card, .topnav-user-btn,
+.topnav-icon-btn, .dropdown-item, .nav-link {
+  -webkit-tap-highlight-color: transparent;
+}
+.btn, .topnav-icon-btn, .topnav-user-btn, .sidebar-nav-item,
+.report-btn-card, .dropdown-item, .nav-tabs .nav-link {
+  transition: color .18s ease, background-color .18s ease, border-color .18s ease,
+              box-shadow .18s ease, transform .18s ease;
+}
+.btn:focus-visible, button:focus-visible, a:focus-visible,
+.form-control:focus-visible, .form-select:focus-visible,
+.sidebar-nav-item:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring) !important;
+}
+.btn:active { transform: translateY(1px); }
+.btn-gradient:active, .btn-primary:active { transform: translateY(1px) scale(.99); }
+
+/* App shell depth and spacing */
+#contentArea { min-width: 0; }
+#sidebar { scrollbar-width: thin; scrollbar-color: rgba(203,213,225,.28) transparent; }
+#sidebar .sidebar-nav-item:focus-visible { background: rgba(255,255,255,.12); color: #fff; }
+#topNavbar { backdrop-filter: saturate(160%) blur(12px); }
+.page-header { animation: slideUpFade .32s ease both; }
+.section-page.active { animation: sectionEnter .28s ease both; }
+@keyframes sectionEnter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Cards */
+.stat-card, .panel-card, .table-container, .report-btn-card {
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.stat-card:hover, .panel-card:hover, .table-container:hover {
+  border-color: #cbdaf7;
+}
+.panel-card { box-shadow: var(--shadow-card); }
+.panel-card-header { background: linear-gradient(180deg, #fff, #fbfdff); }
+.report-btn-card { cursor: pointer; }
+.report-btn-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: #bfdbfe; }
+
+/* Tables: clearer row interaction and horizontal scrolling */
+.table-responsive { border-radius: inherit; }
+.payroll-table tbody tr { cursor: default; }
+.payroll-table tbody tr:hover td { background: #f5f8ff; }
+.payroll-table tbody td { transition: background-color .15s ease; }
+
+/* Inputs */
+.form-control:hover, .form-select:hover { border-color: #b7c8e8; }
+.form-control:disabled, .form-select:disabled { cursor: not-allowed; background: #f1f5f9; }
+.input-group:focus-within { box-shadow: var(--focus-ring); border-radius: 8px; }
+.input-group:focus-within .input-group-text,
+.input-group:focus-within .form-control { border-color: var(--primary); }
+
+/* Dropdowns, modals and toasts */
+.dropdown-menu { border: 1px solid var(--border-color); border-radius: 12px; padding: 7px; box-shadow: var(--shadow-float); animation: menuIn .16s ease both; }
+@keyframes menuIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.dropdown-item { border-radius: 7px; font-size: .86rem; }
+.dropdown-item:hover { background: #eff6ff; color: var(--primary-dark); }
+.modal.show .modal-dialog { animation: modalIn .22s ease both; }
+@keyframes modalIn { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+#toastContainer { z-index: 2000; }
+.toast-item { animation: toastIn .25s ease both; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Responsive refinements */
+@media (max-width: 991.98px) {
+  #topNavbar { padding-inline: 16px; }
+  #contentArea { padding: 22px; }
+}
+@media (max-width: 767.98px) {
+  #contentArea { padding: 16px; }
+  .page-header { align-items: flex-start; }
+  .page-header-left .page-title { font-size: 1.12rem; }
+  .panel-card-body { padding: 16px; }
+  .panel-card-body.p-0 { padding: 0; }
+  .table-container .table-header { padding: 14px 16px; }
+  .payroll-table thead th, .payroll-table tbody td { padding: 10px 11px; }
+}
+@media (max-width: 575.98px) {
+  #topNavbar { height: 56px; padding-inline: 12px; }
+  #contentArea { margin-top: 56px; padding: 13px; }
+  .topnav-title { font-size: .9rem; }
+  .topnav-title span { display: none; }
+  .topnav-user-btn { padding: 5px 8px; }
+  .topnav-user-btn .user-name { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .page-header { margin-bottom: 18px; }
+  .page-header .btn { width: 100%; }
+  .stat-card { padding: 15px; }
+  .stat-card-icon { width: 38px; height: 38px; font-size: 17px; margin-bottom: 11px; }
+  .stat-card-value { font-size: 1.35rem; }
+  .stat-card-label { font-size: .68rem; }
+  .login-card { padding: 30px 22px; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
